@@ -39,26 +39,37 @@ body {
     background: var(--bg-secondary);
     color: var(--text-primary);
     line-height: 1.6;
-    min-height: 100vh;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Container */
 .container {
     max-width: 600px;
     margin: 0 auto;
-    padding: 2rem 1.5rem;
+    padding: 2rem 2rem;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: visible;
+    min-width: 320px;
 }
 
 @media (max-width: 640px) {
     .container {
         padding: 1rem;
+        justify-content: flex-start;
+        padding-top: 2rem;
     }
 }
 
 /* Header */
 .header {
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
+    flex-shrink: 0;
 }
 
 .title {
@@ -77,15 +88,35 @@ body {
     font-weight: 400;
 }
 
+@media (max-width: 640px) {
+    .header {
+        margin-bottom: 1.5rem;
+    }
+    
+    .title {
+        font-size: 2rem;
+    }
+    
+    .subtitle {
+        font-size: 1rem;
+    }
+}
+
 /* Form */
 .form-container {
-    margin-bottom: 2rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 0;
 }
 
 .form {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1.5rem;
+    max-height: 100%;
+    overflow: visible;
 }
 
 .input-group {
@@ -108,17 +139,21 @@ body {
     border-radius: 8px;
     font-size: 1rem;
     font-family: inherit;
-    resize: vertical;
+    resize: none;
     transition: all 0.3s ease;
     color: var(--text-primary);
     background: var(--bg-primary);
     min-height: 75px;
+    max-height: 120px;
+    overflow-y: auto;
 }
 
 .textarea:focus {
     outline: none;
     border-color: var(--primary);
     box-shadow: 0 0 0 3px rgba(107, 142, 35, 0.1);
+    position: relative;
+    z-index: 1;
 }
 
 .textarea::placeholder {
@@ -171,11 +206,16 @@ body {
 .animation-container {
     display: flex;
     flex-direction: column;
-    gap: 3rem;
+    gap: 2rem;
+    overflow: visible;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
 }
 
 .section {
     text-align: center;
+    width: 100%;
 }
 
 .section.hidden {
@@ -188,9 +228,11 @@ body {
 .card {
     padding: 2rem;
     border-radius: 12px;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     box-shadow: 0 2px 8px var(--shadow-secondary);
     transition: all 0.3s ease;
+    max-width: 500px;
+    width: 100%;
 }
 
 .memory-card {
@@ -214,8 +256,9 @@ body {
 /* Fire Container */
 .fire-container {
     position: relative;
-    height: 80px;
+    height: 60px;
     margin-top: 1rem;
+    overflow: hidden; /* Keep this hidden to contain particles */
 }
 
 .fire-particle {
@@ -224,6 +267,7 @@ body {
     border-radius: 50%;
     pointer-events: none;
     box-shadow: 0 0 8px rgba(255, 87, 34, 0.6);
+    z-index: 10; /* Ensure particles stay above content */
 }
 
 /* FAB Button */
@@ -246,6 +290,35 @@ body {
     z-index: 1000;
 }
 
+/* Responsive adjustments for FAB button */
+@media (max-width: 640px) {
+    .fab {
+        bottom: 1rem;
+        right: 1rem;
+        width: 48px;
+        height: 48px;
+    }
+    
+    .fab svg {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .fab {
+        bottom: 0.75rem;
+        right: 0.75rem;
+        width: 44px;
+        height: 44px;
+    }
+    
+    .fab svg {
+        width: 18px;
+        height: 18px;
+    }
+}
+
 .fab:hover {
     background: var(--primary-dark);
     box-shadow: 0 6px 16px var(--shadow-primary);
@@ -264,12 +337,17 @@ body {
 /* Notification Container */
 .notification-container {
     position: fixed;
-    top: 2rem;
-    right: 2rem;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 1001;
     max-width: 400px;
+    width: calc(100% - 2rem);
     min-height: 60px; /* Prevent CLS by reserving space */
     pointer-events: none; /* Allow clicks to pass through when empty */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .notification-container:empty {
@@ -286,12 +364,15 @@ body {
     font-size: 1rem;
     line-height: 1.6;
     color: var(--primary-dark);
-    transform: translateX(100%);
+    transform: translateY(100%);
     opacity: 0;
     position: relative;
     font-weight: 500;
     pointer-events: auto; /* Re-enable pointer events */
     backdrop-filter: blur(8px);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
 }
 
 .notification::before {
@@ -310,6 +391,97 @@ body {
     justify-content: center;
     color: var(--primary);
     font-size: 0.8rem;
+}
+
+/* Responsive adjustments for notifications */
+@media (max-width: 640px) {
+    .notification-container {
+        bottom: 1rem;
+        width: calc(100% - 1rem);
+        max-width: none;
+    }
+    
+    .notification {
+        font-size: 0.9rem;
+        padding: 1rem 1.25rem;
+        margin-bottom: 0.75rem;
+    }
+    
+    .notification::before {
+        left: -8px;
+        width: 20px;
+        height: 20px;
+        font-size: 0.7rem;
+    }
+    
+    /* Prevent animation overflow on mobile */
+    .animation-container {
+        gap: 1.5rem;
+        padding: 1rem;
+    }
+    
+    .card {
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .fire-container {
+        height: 50px;
+    }
+    
+    .form {
+        gap: 1rem;
+    }
+    
+    .input-group {
+        gap: 0.25rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .notification-container {
+        bottom: 0.75rem;
+        width: calc(100% - 0.75rem);
+    }
+    
+    .notification {
+        font-size: 0.85rem;
+        padding: 0.875rem 1rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    /* Further reduce animation elements on small mobile */
+    .animation-container {
+        gap: 1rem;
+        padding: 0.75rem;
+    }
+    
+    .card {
+        padding: 1rem;
+        margin-bottom: 0.75rem;
+    }
+    
+    .fire-container {
+        height: 40px;
+    }
+    
+    .card-text {
+        font-size: 0.9rem;
+    }
+    
+    .form {
+        gap: 0.75rem;
+    }
+    
+    .input-group {
+        gap: 0.2rem;
+    }
+    
+    .textarea {
+        min-height: 60px;
+        max-height: 100px;
+        padding: 0.75rem;
+    }
 }
 
 

@@ -96,10 +96,11 @@ function setupFormInteractions() {
     const textareas = document.querySelectorAll('textarea');
     
     textareas.forEach(textarea => {
-        // Auto-resize
+        // Auto-resize with viewport constraints
         textarea.addEventListener('input', function() {
             this.style.height = 'auto';
-            this.style.height = Math.min(this.scrollHeight, 300) + 'px';
+            const maxHeight = window.innerWidth <= 480 ? 100 : window.innerWidth <= 640 ? 120 : 150;
+            this.style.height = Math.min(this.scrollHeight, maxHeight) + 'px';
         });
         
         // Focus animation
@@ -141,7 +142,7 @@ function showError(message) {
     // Animate in with bounce
     anime({
         targets: errorDiv,
-        translateX: ['100%', '0%'],
+        translateY: ['100%', '0%'],
         opacity: [0, 1],
         scale: [0.8, 1],
         duration: 500,
@@ -152,7 +153,7 @@ function showError(message) {
     setTimeout(() => {
         anime({
             targets: errorDiv,
-            translateX: ['0%', '100%'],
+            translateY: ['0%', '100%'],
             opacity: [1, 0],
             scale: [1, 0.8],
             duration: 400,
@@ -254,6 +255,11 @@ async function burnMemory() {
     
     await sleep(1000);
     
+    // Check if mobile device for reduced scaling
+    const isMobile = window.innerWidth <= 640;
+    const maxScale = isMobile ? 1.08 : 1.15;
+    const maxRotate = isMobile ? 5 : 8;
+    
     // Create burning timeline
     const burnTimeline = anime.timeline({
         easing: 'easeInOutSine',
@@ -263,22 +269,22 @@ async function burnMemory() {
     burnTimeline
         .add({
             targets: elements.memoryCard,
-            scale: [1, 1.08],
-            rotate: [0, 3],
+            scale: [1, isMobile ? 1.05 : 1.08],
+            rotate: [0, isMobile ? 2 : 3],
             filter: ['brightness(1)', 'brightness(1.3) sepia(0.4)'],
             duration: 600
         })
         .add({
             targets: elements.memoryCard,
-            scale: [1.08, 1.15],
-            rotate: [3, 8],
+            scale: [isMobile ? 1.05 : 1.08, maxScale],
+            rotate: [isMobile ? 2 : 3, maxRotate],
             filter: ['brightness(1.3) sepia(0.4)', 'brightness(1.6) sepia(0.7) blur(1px)'],
             duration: 800
         })
         .add({
             targets: elements.memoryCard,
-            scale: [1.15, 0.7],
-            rotate: [8, 15],
+            scale: [maxScale, 0.7],
+            rotate: [maxRotate, isMobile ? 10 : 15],
             opacity: [1, 0],
             filter: ['brightness(1.6) sepia(0.7) blur(1px)', 'brightness(0) sepia(1) blur(3px)'],
             duration: 1200
@@ -312,11 +318,14 @@ function createFireParticles() {
     const container = elements.fireContainer;
     const particleCount = Math.floor(Math.random() * 5) + 4;
     
+    // Check if mobile device
+    const isMobile = window.innerWidth <= 640;
+    
     for (let i = 0; i < particleCount; i++) {
         const particle = document.createElement('div');
         particle.className = 'fire-particle';
         
-        const size = Math.random() * 15 + 8;
+        const size = Math.random() * (isMobile ? 10 : 15) + (isMobile ? 6 : 8);
         const startX = Math.random() * 100;
         
         particle.style.width = `${size}px`;
@@ -329,8 +338,8 @@ function createFireParticles() {
         // Animate particle with physics-like movement
         anime({
             targets: particle,
-            translateY: [0, -120],
-            translateX: [0, anime.random(-40, 40)],
+            translateY: [0, isMobile ? -80 : -120],
+            translateX: [0, anime.random(isMobile ? -20 : -40, isMobile ? 20 : 40)],
             scale: [1, 0],
             opacity: [1, 0],
             duration: anime.random(2000, 3500),
@@ -474,7 +483,7 @@ function showNotification() {
     // Animate in with elastic slide
     anime({
         targets: notification,
-        translateX: ['100%', '0%'],
+        translateY: ['100%', '0%'],
         opacity: [0, 1],
         scale: [0.8, 1],
         duration: 800,
@@ -485,7 +494,7 @@ function showNotification() {
     setTimeout(() => {
         anime({
             targets: notification,
-            translateX: ['0%', '100%'],
+            translateY: ['0%', '100%'],
             opacity: [1, 0],
             scale: [1, 0.8],
             duration: 600,

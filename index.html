@@ -1,92 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Grow and Let Go</title>
-    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
-    <link rel="icon" type="image/svg+xml" href="assets/images/favicon-16x16.svg" sizes="16x16">
-    <link rel="apple-touch-icon" href="assets/images/favicon.svg">
-    <meta name="theme-color" content="#6b8e23">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/style.css">
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="assets/images/favicon-16x16.svg"
+      sizes="16x16"
+    />
+    <link rel="apple-touch-icon" href="assets/images/favicon.svg" />
+    <meta name="theme-color" content="#6b8e23" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/style.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
+      <!-- Main Form -->
+      <main id="mainForm" class="form-container">
         <!-- Header -->
         <div class="header" id="header">
-            <h1 class="title">Grow & Let Go</h1>
-            <p class="subtitle">Mistakes are part of being human.</p>
-            <!-- <p class="subtitle">Write it, burn it, grow from it</p> -->
+          <h1 class="title">Grow & Let Go</h1>
+          <p class="subtitle">Mistakes are part of being human.</p>
+          <!-- <p class="subtitle">Write it, burn it, grow from it</p> -->
         </div>
 
-        <!-- Main Form -->
-        <div id="mainForm" class="form-container">
-            <form id="memoryForm" class="form">
-                <!-- Memory Input -->
-                <div class="input-group" id="memoryInput">
-                    <label for="badMemory" class="label">What memory would you like to release?</label>
-                    <textarea 
-                        id="badMemory" 
-                        name="badMemory" 
-                        rows="3" 
-                        class="textarea"
-                        placeholder="Write the memory that's been weighing on you..."
-                        required
-                        autofocus
-                    ></textarea>
-                </div>
+        <form id="memoryForm" class="form">
+          <!-- Memory Input -->
+          <div class="input-group" id="memoryInput">
+            <label for="badMemory" class="label"
+              >What memory would you like to release?</label
+            >
+            <textarea
+              id="badMemory"
+              name="badMemory"
+              rows="3"
+              class="textarea"
+              placeholder="Write the memory that's been weighing on you..."
+              required
+              autofocus
+            ></textarea>
+          </div>
 
-                <!-- Lesson Input -->
-                <div class="input-group" id="lessonInput">
-                    <label for="lessonLearned" class="label">What lesson did you take away from this?</label>
-                    <textarea 
-                        id="lessonLearned" 
-                        name="lessonLearned" 
-                        rows="2" 
-                        class="textarea"
-                        placeholder="Reflect on the lesson learned..."
-                        required
-                    ></textarea>
-                </div>
+          <!-- Lesson Input -->
+          <div class="input-group" id="lessonInput">
+            <label for="lessonLearned" class="label"
+              >What lesson did you take away from this?</label
+            >
+            <textarea
+              id="lessonLearned"
+              name="lessonLearned"
+              rows="2"
+              class="textarea"
+              placeholder="Reflect on the lesson learned..."
+              required
+            ></textarea>
+          </div>
 
-                <!-- Submit Button -->
-                <button type="submit" id="submitBtn" class="btn btn-primary">
-                    <span class="btn-text">Release and Grow</span>
-                </button>
-            </form>
+          <!-- Submit Button -->
+          <button type="submit" id="submitBtn" class="btn btn-primary">
+            <span class="btn-text">Release and Grow</span>
+          </button>
+        </form>
+      </main>
+
+      <!-- Animation Container -->
+      <div id="animationContainer" class="animation-container hidden">
+        <!-- Memory Burning -->
+        <div id="burningSection" class="section">
+          <div id="memoryCard" class="card memory-card">
+            <p id="memoryText" class="card-text"></p>
+          </div>
+          <div id="fireContainer" class="fire-container"></div>
         </div>
 
-        <!-- Animation Container -->
-        <div id="animationContainer" class="animation-container hidden">
-            <!-- Memory Burning -->
-            <div id="burningSection" class="section">
-                <div id="memoryCard" class="card memory-card">
-                    <p id="memoryText" class="card-text"></p>
-                </div>
-                <div id="fireContainer" class="fire-container"></div>
-            </div>
-
-            <!-- Lesson Growing -->
-            <div id="lessonSection" class="section hidden">
-                <div id="lessonCard" class="card lesson-card">
-                    <p id="lessonText" class="card-text"></p>
-                </div>
-            </div>
+        <!-- Lesson Growing -->
+        <div id="lessonSection" class="section hidden">
+          <div id="lessonCard" class="card lesson-card">
+            <p id="lessonText" class="card-text"></p>
+          </div>
         </div>
+      </div>
     </div>
 
     <!-- Begin Again Button -->
     <button id="startOverBtn" class="fab hidden" title="Begin Again">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4C7.58 4 4.01 7.58 4.01 12C4.01 16.42 7.58 20 12 20C15.73 20 18.84 17.45 19.73 14H17.65C16.83 16.33 14.61 18 12 18C8.69 18 6 15.31 6 12C6 8.69 8.69 6 12 6C13.66 6 15.14 6.69 16.22 7.78L13 11H20V4L17.65 6.35Z" fill="currentColor"/>
-        </svg>
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M17.65 6.35C16.2 4.9 14.21 4 12 4C7.58 4 4.01 7.58 4.01 12C4.01 16.42 7.58 20 12 20C15.73 20 18.84 17.45 19.73 14H17.65C16.83 16.33 14.61 18 12 18C8.69 18 6 15.31 6 12C6 8.69 8.69 6 12 6C13.66 6 15.14 6.69 16.22 7.78L13 11H20V4L17.65 6.35Z"
+          fill="currentColor"
+        />
+      </svg>
     </button>
 
     <!-- Notification Container -->
     <div id="notificationContainer" class="notification-container"></div>
 
     <script src="assets/script.js"></script>
-</body>
+  </body>
 </html>
