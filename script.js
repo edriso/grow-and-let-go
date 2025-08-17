@@ -1,0 +1,503 @@
+// Encouraging messages
+const encouragingMessages = [
+    "It's okay to let go. You're stronger than you know.",
+    "Every ending is a new beginning. You've got this.",
+    "You're not defined by your past, but by how you grow from it.",
+    "Your resilience is beautiful. Keep growing.",
+    "Sometimes the hardest thing and the right thing are the same. You chose growth.",
+    "You're doing better than you think. Trust the process.",
+    "Growth isn't always comfortable, but it's always worth it.",
+    "You have the power to transform pain into wisdom.",
+    "Your future self is thanking you for this moment of courage.",
+    "You're not alone in this journey. Every step forward counts.",
+    "The best is yet to come. You're building something beautiful.",
+    "You're exactly where you need to be. Trust your journey.",
+    "Your strength inspires others. Keep shining.",
+    "Every challenge is preparing you for something amazing.",
+    "You're becoming the person you were meant to be."
+];
+
+// DOM elements
+const elements = {
+    memoryForm: document.getElementById('memoryForm'),
+    mainForm: document.getElementById('mainForm'),
+    animationContainer: document.getElementById('animationContainer'),
+    burningSection: document.getElementById('burningSection'),
+    lessonSection: document.getElementById('lessonSection'),
+    memoryText: document.getElementById('memoryText'),
+    lessonText: document.getElementById('lessonText'),
+    memoryCard: document.getElementById('memoryCard'),
+    lessonCard: document.getElementById('lessonCard'),
+    fireContainer: document.getElementById('fireContainer'),
+    startOverBtn: document.getElementById('startOverBtn'),
+    header: document.getElementById('header'),
+    memoryInput: document.getElementById('memoryInput'),
+    lessonInput: document.getElementById('lessonInput'),
+    submitBtn: document.getElementById('submitBtn'),
+    notificationContainer: document.getElementById('notificationContainer')
+};
+
+// Initialize animations on page load
+document.addEventListener('DOMContentLoaded', function() {
+    initializePageAnimations();
+    setupFormInteractions();
+});
+
+// Initialize page animations with Anime.js
+function initializePageAnimations() {
+    // Set initial states
+    anime.set([elements.header, elements.memoryInput, elements.lessonInput, elements.submitBtn], {
+        opacity: 0,
+        translateY: 50
+    });
+
+    // Create timeline for page entrance
+    const timeline = anime.timeline({
+        easing: 'easeOutCubic',
+        duration: 800
+    });
+
+    timeline
+        .add({
+            targets: elements.header,
+            opacity: [0, 1],
+            translateY: [50, 0],
+            duration: 1200
+        })
+        .add({
+            targets: [elements.memoryInput, elements.lessonInput, elements.submitBtn],
+            opacity: [0, 1],
+            translateY: [30, 0],
+            delay: anime.stagger(150),
+            duration: 600
+        }, '-=600');
+}
+
+// Setup form interactions
+function setupFormInteractions() {
+    const textareas = document.querySelectorAll('textarea');
+    
+    textareas.forEach(textarea => {
+        // Auto-resize
+        textarea.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = Math.min(this.scrollHeight, 300) + 'px';
+        });
+        
+        // Focus animation
+        textarea.addEventListener('focus', function() {
+            anime({
+                targets: this.parentElement,
+                translateY: -8,
+                scale: 1.02,
+                duration: 300,
+                easing: 'easeOutCubic'
+            });
+        });
+        
+        textarea.addEventListener('blur', function() {
+            anime({
+                targets: this.parentElement,
+                translateY: 0,
+                scale: 1,
+                duration: 300,
+                easing: 'easeOutCubic'
+            });
+        });
+    });
+}
+
+// Form handling
+let isProcessing = false; // Flag to prevent multiple submissions
+elements.memoryForm.addEventListener('submit', handleFormSubmit);
+
+// Error display
+function showError(message) {
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'notification';
+    errorDiv.style.position = 'static';
+    errorDiv.style.marginBottom = '1rem';
+    errorDiv.textContent = message;
+    
+    const form = document.getElementById('memoryForm');
+    form.parentNode.insertBefore(errorDiv, form);
+    
+    // Animate in with bounce
+    anime({
+        targets: errorDiv,
+        opacity: [0, 1],
+        translateY: [-30, 0],
+        scale: [0.8, 1],
+        duration: 500,
+        easing: 'easeOutElastic(1, 0.8)'
+    });
+    
+    // Animate out
+    setTimeout(() => {
+        anime({
+            targets: errorDiv,
+            opacity: 0,
+            translateY: -20,
+            scale: 0.9,
+            duration: 400,
+            easing: 'easeInCubic',
+            complete: () => errorDiv.remove()
+        });
+    }, 4000);
+}
+
+// Form submission handler
+async function handleFormSubmit(e) {
+    e.preventDefault();
+    
+    // Prevent multiple submissions
+    if (isProcessing) {
+        return;
+    }
+    
+    isProcessing = true;
+    
+    const badMemory = document.getElementById('badMemory').value.trim();
+    const lessonLearned = document.getElementById('lessonLearned').value.trim();
+    
+    if (!badMemory) {
+        showError('Please write down the memory you want to release.');
+        isProcessing = false;
+        return;
+    }
+    
+    if (!lessonLearned) {
+        showError('Please reflect on the lesson you learned from this experience.');
+        isProcessing = false;
+        return;
+    }
+    
+    await startAnimationSequence(badMemory, lessonLearned);
+}
+
+// Main animation sequence
+async function startAnimationSequence(badMemory, lessonLearned) {
+    // Set content with preserved formatting
+    elements.memoryText.textContent = badMemory;
+    elements.lessonText.textContent = lessonLearned;
+    
+    // Animate form out with slide and fade
+    await new Promise(resolve => {
+        anime({
+            targets: elements.mainForm,
+            opacity: [1, 0],
+            translateY: [0, -60],
+            scale: [1, 0.9],
+            duration: 800,
+            easing: 'easeInCubic',
+            complete: resolve
+        });
+    });
+    
+    elements.mainForm.style.display = 'none';
+    elements.animationContainer.classList.remove('hidden');
+    
+    // Animate container in with elastic bounce
+    await new Promise(resolve => {
+        anime({
+            targets: elements.animationContainer,
+            opacity: [0, 1],
+            translateY: [60, 0],
+            scale: [0.8, 1],
+            duration: 1000,
+            easing: 'easeOutElastic(1, 0.6)',
+            complete: resolve
+        });
+    });
+    
+    // Show burning section
+    elements.burningSection.classList.remove('hidden');
+    elements.lessonSection.classList.add('hidden');
+    
+    await sleep(2000);
+    
+    // Burn memory
+    await burnMemory();
+    
+    // Show lesson growing
+    await showLessonGrowing();
+    
+    // Show restart button and notification
+    showRestartButton();
+    showNotification();
+}
+
+// Burn memory animation
+async function burnMemory() {
+    // Start particle system
+    createFireParticles();
+    
+    await sleep(1000);
+    
+    // Create burning timeline
+    const burnTimeline = anime.timeline({
+        easing: 'easeInOutSine',
+        duration: 800
+    });
+
+    burnTimeline
+        .add({
+            targets: elements.memoryCard,
+            scale: [1, 1.08],
+            rotate: [0, 3],
+            filter: ['brightness(1)', 'brightness(1.3) sepia(0.4)'],
+            duration: 600
+        })
+        .add({
+            targets: elements.memoryCard,
+            scale: [1.08, 1.15],
+            rotate: [3, 8],
+            filter: ['brightness(1.3) sepia(0.4)', 'brightness(1.6) sepia(0.7) blur(1px)'],
+            duration: 800
+        })
+        .add({
+            targets: elements.memoryCard,
+            scale: [1.15, 0.7],
+            rotate: [8, 15],
+            opacity: [1, 0],
+            filter: ['brightness(1.6) sepia(0.7) blur(1px)', 'brightness(0) sepia(1) blur(3px)'],
+            duration: 1200
+        });
+
+    // Continue particles during burn
+    const particleInterval = setInterval(createFireParticles, 150);
+    
+    await sleep(3000);
+    clearInterval(particleInterval);
+    
+    // Fade out burning section
+    await new Promise(resolve => {
+        anime({
+            targets: elements.burningSection,
+            opacity: [1, 0],
+            translateY: [0, -40],
+            scale: [1, 0.8],
+            duration: 800,
+            easing: 'easeInCubic',
+            complete: () => {
+                elements.burningSection.classList.add('hidden');
+                resolve();
+            }
+        });
+    });
+}
+
+// Create fire particles
+function createFireParticles() {
+    const container = elements.fireContainer;
+    const particleCount = Math.floor(Math.random() * 5) + 4;
+    
+    for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'fire-particle';
+        
+        const size = Math.random() * 15 + 8;
+        const startX = Math.random() * 100;
+        
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = `${startX}%`;
+        particle.style.bottom = '0';
+        
+        container.appendChild(particle);
+        
+        // Animate particle with physics-like movement
+        anime({
+            targets: particle,
+            translateY: [0, -120],
+            translateX: [0, anime.random(-40, 40)],
+            scale: [1, 0],
+            opacity: [1, 0],
+            duration: anime.random(2000, 3500),
+            easing: 'easeOutQuart',
+            complete: () => {
+                if (particle.parentNode) {
+                    particle.remove();
+                }
+            }
+        });
+    }
+}
+
+// Show lesson growing
+async function showLessonGrowing() {
+    elements.lessonSection.classList.remove('hidden');
+    
+    // Animate section in with slide
+    await new Promise(resolve => {
+        anime({
+            targets: elements.lessonSection,
+            opacity: [0, 1],
+            translateX: [-80, 0],
+            duration: 1000,
+            easing: 'easeOutCubic',
+            complete: resolve
+        });
+    });
+    
+    // Animate lesson card with elastic growth
+    await new Promise(resolve => {
+        anime({
+            targets: elements.lessonCard,
+            scale: [0.1, 1],
+            opacity: [0, 1],
+            translateY: [60, 0],
+            duration: 1500,
+            easing: 'easeOutElastic(1, 0.5)',
+            complete: resolve
+        });
+    });
+    
+    // Create wisdom particles
+    createWisdomParticles();
+    
+    await sleep(2000);
+    
+    // Add floating animation to text
+    anime({
+        targets: elements.lessonText,
+        translateY: [0, -12, 0],
+        duration: 4000,
+        easing: 'easeInOutSine',
+        loop: true,
+        direction: 'alternate'
+    });
+    
+    // Add pulsing glow effect
+    anime({
+        targets: elements.lessonCard,
+        boxShadow: [
+            '0 0 25px rgba(139, 92, 246, 0.4)',
+            '0 0 50px rgba(139, 92, 246, 0.8)',
+            '0 0 25px rgba(139, 92, 246, 0.4)'
+        ],
+        duration: 3000,
+        easing: 'easeInOutSine',
+        loop: true,
+        direction: 'alternate'
+    });
+    
+    await sleep(3000);
+}
+
+// Create wisdom particles
+function createWisdomParticles() {
+    const container = elements.lessonCard;
+    const particleCount = 20;
+    
+    for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'fire-particle';
+        particle.style.background = 'var(--primary)';
+        
+        const size = Math.random() * 10 + 5;
+        const startX = Math.random() * 100;
+        const startY = Math.random() * 100;
+        
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = `${startX}%`;
+        particle.style.top = `${startY}%`;
+        
+        container.style.position = 'relative';
+        container.appendChild(particle);
+        
+        // Animate particle with spiral-like movement
+        anime({
+            targets: particle,
+            translateY: [0, -150],
+            translateX: [0, anime.random(-50, 50)],
+            scale: [1, 0],
+            opacity: [1, 0],
+            duration: anime.random(3000, 5000),
+            easing: 'easeOutQuart',
+            complete: () => {
+                if (particle.parentNode) {
+                    particle.remove();
+                }
+            }
+        });
+    }
+}
+
+// Show restart button
+function showRestartButton() {
+    elements.startOverBtn.classList.remove('hidden');
+    anime({
+        targets: elements.startOverBtn,
+        scale: [0, 1],
+        opacity: [0, 1],
+        rotate: [360, 0],
+        duration: 1000,
+        easing: 'easeOutElastic(1, 0.8)'
+    });
+}
+
+// Show notification
+function showNotification() {
+    const randomMessage = encouragingMessages[Math.floor(Math.random() * encouragingMessages.length)];
+    
+    const notification = document.createElement('div');
+    notification.className = 'notification';
+    notification.textContent = randomMessage;
+    
+    elements.notificationContainer.appendChild(notification);
+    
+    // Animate in with elastic slide
+    anime({
+        targets: notification,
+        translateX: ['100%', '0%'],
+        opacity: [0, 1],
+        scale: [0.8, 1],
+        duration: 800,
+        easing: 'easeOutElastic(1, 0.8)'
+    });
+    
+    // Animate out
+    setTimeout(() => {
+        anime({
+            targets: notification,
+            translateX: ['0%', '100%'],
+            opacity: [1, 0],
+            scale: [1, 0.8],
+            duration: 600,
+            easing: 'easeInCubic',
+            complete: () => {
+                if (notification.parentNode) {
+                    notification.remove();
+                }
+            }
+        });
+    }, 5000);
+}
+
+// Start over functionality - refresh page
+elements.startOverBtn.addEventListener('click', function() {
+    window.location.reload();
+});
+
+// Utility function
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+// Keyboard shortcuts
+document.addEventListener('keydown', function(e) {
+    // Ctrl/Cmd + Enter to submit
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+        const submitBtn = document.querySelector('button[type="submit"]');
+        if (submitBtn && submitBtn.offsetParent !== null && !isProcessing) {
+            submitBtn.click();
+        }
+    }
+    
+    // Escape to reset - works anytime
+    if (e.key === 'Escape') {
+        window.location.reload();
+    }
+});
