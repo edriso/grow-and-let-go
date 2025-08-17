@@ -202,20 +202,8 @@ async function startAnimationSequence(badMemory, lessonLearned) {
     elements.memoryText.textContent = badMemory;
     elements.lessonText.textContent = lessonLearned;
     
-    // Animate form out with slide and fade
-    await new Promise(resolve => {
-        anime({
-            targets: elements.main,
-            opacity: [1, 0],
-            translateY: [0, -60],
-            scale: [1, 0.9],
-            duration: 800,
-            easing: 'easeInCubic',
-            complete: resolve
-        });
-    });
-    
-    elements.main.style.display = 'none';
+    // Hide form and show animation container
+    elements.memoryForm.style.display = 'none';
     elements.animationContainer.classList.remove('hidden');
     
     // Animate container in with elastic bounce

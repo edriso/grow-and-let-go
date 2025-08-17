@@ -72,7 +72,6 @@ body {
 /* Header */
 header {
   text-align: center;
-  margin-bottom: 4rem;
   flex-shrink: 0;
 }
 
@@ -93,11 +92,6 @@ header {
 }
 
 @media (max-width: 640px) {
-  header {
-    margin-bottom: 2rem;
-    text-align: center;
-  }
-
   .title {
     font-size: 2rem;
   }
@@ -109,6 +103,18 @@ header {
   .form {
     gap: 1rem;
   }
+}
+
+/* Main container */
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 0;
+  width: 100%;
+  position: relative;
 }
 
 .form {
@@ -201,6 +207,23 @@ header {
 
 .btn-icon {
   font-size: 1.25rem;
+}
+
+/* Animation Container */
+.animation-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  overflow: visible;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
 }
 
 .section {
