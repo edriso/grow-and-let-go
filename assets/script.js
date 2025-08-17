@@ -1,20 +1,20 @@
-// Encouraging messages
+// Evidence-based encouraging messages inspired by therapeutic practices
 const encouragingMessages = [
-    "It's okay to let go. You're stronger than you know.",
-    "Every ending is a new beginning. You've got this.",
-    "You're not defined by your past, but by how you grow from it.",
-    "Your resilience is beautiful. Keep growing.",
-    "Sometimes the hardest thing and the right thing are the same. You chose growth.",
-    "You're doing better than you think. Trust the process.",
-    "Growth isn't always comfortable, but it's always worth it.",
-    "You have the power to transform pain into wisdom.",
-    "Your future self is thanking you for this moment of courage.",
-    "You're not alone in this journey. Every step forward counts.",
-    "The best is yet to come. You're building something beautiful.",
-    "You're exactly where you need to be. Trust your journey.",
-    "Your strength inspires others. Keep shining.",
-    "Every challenge is preparing you for something amazing.",
-    "You're becoming the person you were meant to be."
+    "You've taken a powerful step toward healing. This moment of release matters.",
+    "Your willingness to let go shows incredible emotional strength.",
+    "Every memory you release creates space for new growth and peace.",
+    "You're not your past experiences. You're the wisdom you've gained from them.",
+    "This act of self-compassion will ripple through your future in beautiful ways.",
+    "You've transformed pain into purpose. That's the essence of resilience.",
+    "Your courage to face difficult memories is a testament to your inner strength.",
+    "You're building emotional freedom, one release at a time.",
+    "This moment of letting go is a gift to your future self.",
+    "You've chosen growth over staying stuck. That's true wisdom.",
+    "Your healing journey inspires others to find their own strength.",
+    "You're creating space for joy, peace, and new possibilities.",
+    "This release is a declaration of your commitment to emotional well-being.",
+    "You've turned a difficult memory into a stepping stone for growth.",
+    "Your future is brighter because you chose to let go today."
 ];
 
 // Helper function to get CSS variable value
