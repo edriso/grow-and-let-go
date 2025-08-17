@@ -71,9 +71,10 @@ body {
 
 .subtitle {
     font-size: 1.125rem;
-    color: var(--text-secondary);
+    color: var(--primary-dark);
     max-width: 400px;
     margin: 0 auto;
+    font-weight: 400;
 }
 
 /* Form */
@@ -95,8 +96,9 @@ body {
 
 .label {
     font-size: 1rem;
-    font-weight: 500;
-    color: var(--text-primary);
+    font-weight: 600;
+    color: var(--primary-dark);
+    letter-spacing: -0.2px;
 }
 
 .textarea {
