@@ -345,12 +345,12 @@ function createFireParticles() {
 async function showLessonGrowing() {
     elements.lessonSection.classList.remove('hidden');
     
-    // Animate section in with slide
+    // Animate section in with fade and scale
     await new Promise(resolve => {
         anime({
             targets: elements.lessonSection,
             opacity: [0, 1],
-            translateX: [-80, 0],
+            scale: [0.9, 1],
             duration: 1000,
             easing: 'easeOutCubic',
             complete: resolve
