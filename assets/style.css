@@ -107,7 +107,6 @@ header {
   }
 
   .form {
-    max-width: 100%;
     gap: 1rem;
   }
 }
@@ -119,7 +118,6 @@ header {
   max-height: 100%;
   overflow: visible;
   width: 100%;
-  max-width: 600px;
 }
 
 .input-group {
@@ -340,7 +338,7 @@ header {
   transform: translateX(-50%);
   z-index: 1001;
   max-width: 400px;
-  width: calc(100% - 2rem);
+  width: calc(100% - 4rem);
   min-height: 60px; /* Prevent CLS by reserving space */
   pointer-events: none; /* Allow clicks to pass through when empty */
   display: flex;
@@ -395,7 +393,7 @@ header {
 @media (max-width: 640px) {
   .notification-container {
     bottom: 1rem;
-    width: calc(100% - 1rem);
+    width: calc(100% - 2rem);
     max-width: none;
   }
 
@@ -431,7 +429,7 @@ header {
 @media (max-width: 480px) {
   .notification-container {
     bottom: 0.75rem;
-    width: calc(100% - 0.75rem);
+    width: calc(100% - 1.5rem);
   }
 
   .notification {
