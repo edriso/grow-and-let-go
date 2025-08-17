@@ -133,18 +133,16 @@ elements.memoryForm.addEventListener('submit', handleFormSubmit);
 function showError(message) {
     const errorDiv = document.createElement('div');
     errorDiv.className = 'notification';
-    errorDiv.style.position = 'static';
-    errorDiv.style.marginBottom = '1rem';
     errorDiv.textContent = message;
     
-    const form = document.getElementById('memoryForm');
-    form.parentNode.insertBefore(errorDiv, form);
+    // Add to notification container instead of DOM flow to prevent CLS
+    elements.notificationContainer.appendChild(errorDiv);
     
     // Animate in with bounce
     anime({
         targets: errorDiv,
+        translateX: ['100%', '0%'],
         opacity: [0, 1],
-        translateY: [-30, 0],
         scale: [0.8, 1],
         duration: 500,
         easing: 'easeOutElastic(1, 0.8)'
@@ -154,12 +152,16 @@ function showError(message) {
     setTimeout(() => {
         anime({
             targets: errorDiv,
-            opacity: 0,
-            translateY: -20,
-            scale: 0.9,
+            translateX: ['0%', '100%'],
+            opacity: [1, 0],
+            scale: [1, 0.8],
             duration: 400,
             easing: 'easeInCubic',
-            complete: () => errorDiv.remove()
+            complete: () => {
+                if (errorDiv.parentNode) {
+                    errorDiv.remove();
+                }
+            }
         });
     }, 4000);
 }
