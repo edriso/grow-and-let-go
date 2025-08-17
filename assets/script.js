@@ -14,7 +14,8 @@ const encouragingMessages = [
     "You're creating space for joy, peace, and new possibilities.",
     "This release is a declaration of your commitment to emotional well-being.",
     "You've turned a difficult memory into a stepping stone for growth.",
-    "Your future is brighter because you chose to let go today."
+    "Your future is brighter because you chose to let go today.",
+    "You, as much as anyone else, deserve your kindness.",
 ];
 
 // Helper function to get CSS variable value
