@@ -62,10 +62,10 @@ body {
 }
 
 .title {
-    font-size: 3rem;
+    font-size: 2.5rem;
     font-weight: 300;
     color: var(--primary);
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
     letter-spacing: -0.5px;
 }
 
@@ -110,6 +110,7 @@ body {
     font-family: inherit;
     resize: vertical;
     transition: all 0.3s ease;
+    color: var(--text-primary);
     background: var(--bg-primary);
     min-height: 75px;
 }
