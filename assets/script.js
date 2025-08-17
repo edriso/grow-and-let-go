@@ -38,7 +38,7 @@ function hexToRgb(hex) {
 // DOM elements
 const elements = {
     memoryForm: document.getElementById('memoryForm'),
-    mainForm: document.getElementById('mainForm'),
+    main: document.getElementById('main'),
     animationContainer: document.getElementById('animationContainer'),
     burningSection: document.getElementById('burningSection'),
     lessonSection: document.getElementById('lessonSection'),
@@ -205,7 +205,7 @@ async function startAnimationSequence(badMemory, lessonLearned) {
     // Animate form out with slide and fade
     await new Promise(resolve => {
         anime({
-            targets: elements.mainForm,
+            targets: elements.main,
             opacity: [1, 0],
             translateY: [0, -60],
             scale: [1, 0.9],
@@ -215,7 +215,7 @@ async function startAnimationSequence(badMemory, lessonLearned) {
         });
     });
     
-    elements.mainForm.style.display = 'none';
+    elements.main.style.display = 'none';
     elements.animationContainer.classList.remove('hidden');
     
     // Animate container in with elastic bounce
