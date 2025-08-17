@@ -17,6 +17,24 @@ const encouragingMessages = [
     "You're becoming the person you were meant to be."
 ];
 
+// Helper function to get CSS variable value
+function getCSSVariable(variableName) {
+    return getComputedStyle(document.documentElement).getPropertyValue(variableName).trim();
+}
+
+// Helper function to convert hex color to RGB
+function hexToRgb(hex) {
+    // Remove the # if present
+    hex = hex.replace('#', '');
+    
+    // Parse the hex values
+    const r = parseInt(hex.substr(0, 2), 16);
+    const g = parseInt(hex.substr(2, 2), 16);
+    const b = parseInt(hex.substr(4, 2), 16);
+    
+    return { r, g, b };
+}
+
 // DOM elements
 const elements = {
     memoryForm: document.getElementById('memoryForm'),
@@ -369,12 +387,15 @@ async function showLessonGrowing() {
     });
     
     // Add pulsing glow effect
+    const primaryColor = getCSSVariable('--primary');
+    const primaryRGB = hexToRgb(primaryColor);
+    
     anime({
         targets: elements.lessonCard,
         boxShadow: [
-            '0 0 25px rgba(139, 92, 246, 0.4)',
-            '0 0 50px rgba(139, 92, 246, 0.8)',
-            '0 0 25px rgba(139, 92, 246, 0.4)'
+            `0 0 25px rgba(${primaryRGB.r}, ${primaryRGB.g}, ${primaryRGB.b}, 0.4)`,
+            `0 0 50px rgba(${primaryRGB.r}, ${primaryRGB.g}, ${primaryRGB.b}, 0.8)`,
+            `0 0 25px rgba(${primaryRGB.r}, ${primaryRGB.g}, ${primaryRGB.b}, 0.4)`
         ],
         duration: 3000,
         easing: 'easeInOutSine',
