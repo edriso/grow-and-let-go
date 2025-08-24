@@ -2,6 +2,15 @@
 
 A simple web app to help you let go of bad memories and grow from them.
 
+## About this app
+
+This app helps you process and release negative memories by encouraging you to find the lessons within them. By writing down what happened and what you learned, you can transform painful experiences into opportunities for growth.
+
+But what if that bad memory was a mistake toward someone who is still in your life, and you didn't apologize?
+
+Here's another app that allows you to create and download apology images, making it easy to send them directly:
+[I Forgot to Say Sorry](https://github.com/edriso/i-forgot-to-say-sorry)
+
 ## What it does
 
 1. Write down a bad memory
